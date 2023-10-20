@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { AgentStatus } from '../enums/agent-status'
 
@@ -41,8 +41,12 @@ export class AgentService {
       );
   }
 
-  createInvitation(): Observable<any> {
-    return this.http.post<any>('/connections/create-invitation', {})
+  createInvitation(alias: string): Observable<any> {
+
+    const params: URLSearchParams = new URLSearchParams();
+    params.set("alias", alias)
+
+    return this.http.post<any>('/connections/create-invitation?' + params, {})
       .pipe(
         switchMap((response: any) => of(response)),
         catchError(this.handleError<any>('createInvitation', null))

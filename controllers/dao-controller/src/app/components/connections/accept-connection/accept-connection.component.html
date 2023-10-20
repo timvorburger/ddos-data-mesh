@@ -1,0 +1,13 @@
+<div class="container">
+    <form novalidate autocomplete="off">
+        <div class="form-group">
+            <label for="invitationUrl">Alternatively paste an invitation URL:</label>
+            <input name="invitationUrl" type="text" class="form-control" id="invitationUrl" [(ngModel)]="invitationUrl">
+            <small *ngIf="error">Unable to process that URL:
+                {{ error }}</small>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="onSubmit()">
+            Accept Invitation
+        </button>
+    </form>
+</div>
