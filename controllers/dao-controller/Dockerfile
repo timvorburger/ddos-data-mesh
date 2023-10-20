@@ -14,4 +14,4 @@ FROM nginx:alpine as runtime
 RUN rm -rf /usr/share/nginx/html/*
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist/dao-controller /usr/share/nginx/html/
-ENTRYPOINT [ "nginx" "-g", "daemon off;" ]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
