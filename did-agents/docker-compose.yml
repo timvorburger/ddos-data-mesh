@@ -10,7 +10,7 @@ services:
       --admin 0.0.0.0 8038
       --admin-insecure-mode
       -e http://host.docker.internal:8880
-      --genesis-url http://host.docker.internal:9000/genesis
+      --ledger-url http://test.bcovrin.vonx.io
       --wallet-type indy
       --wallet-name issuerwallet
       --wallet-key issuerkey
@@ -21,38 +21,11 @@ services:
       --seed issuer00000000000000000000000000
     ports:
       - "8880:8880"
-      - "8038:8038"
-    volumes:
-      - $PWD:/home/indy/logs
-    networks:
-      - von_von
-  aries-company-agent:
-    image: bcgovimages/aries-cloudagent:py36-1.14-1_0.5.1
-    command: >
-      start
-      -l Issuer
-      -it http 0.0.0.0 8700
-      -ot http
-      --admin 0.0.0.0 8006
-      --admin-insecure-mode
-      -e http://host.docker.internal:8700
-      --genesis-url http://host.docker.internal:9000/genesis
-      --wallet-type indy
-      --wallet-name issuerwallet
-      --wallet-key issuerkey
-      --log-level 'info'
-      --auto-accept-invites
-      --auto-accept-requests
-      --auto-ping-connection
-      --seed company0000000000000000000000001
-    ports:
-      - "8700:8700"
-      - "8006:8006"
+      - "8031:8031"
     volumes:
       - $PWD:/home/indy/logs
     networks:
       - von_von
 networks:
   von_von:
-    external:
-      name: von_von
+    external: true

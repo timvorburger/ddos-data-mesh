@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+    dao-agent:
+        command: ['alice --port 8030']
+        build:
+            context: https://github.com/hyperledger/aries-cloudagent-python.git#main
+            dockerfile: ./docker/Dockerfile.demo
+        ports:
+            - 8030-8037:8030-8037
+        networks:
+            - von_von
+        environment:
+            - RUNMODE=${RUNMODE}
+            - DOCKERHOST=${DOCKERHOST}
+            - LEDGER_URL=${LEDGER_URL}
+            - GENESIS_URL=${GENESIS_URL}
+        tty: true
+    # Controllers
+    dao-controller:
+        build:
+            context: ../dao-controller/
+            args:
+                - RUNMODE=${RUNMODE}
+                - DAO_AGENT_HOST=${DAO_AGENT_HOST}
+        ports:
+            - 9031:80
+        depends_on:
+            - dao-agent
+        networks:
+            - von_von
+
+networks:
+    von_von:
+        external: true
