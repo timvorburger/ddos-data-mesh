@@ -59,6 +59,7 @@ function web_down() {
 
 function build() {
 	docker-compose -f ./docker/docker-compose.yml build dao-controller --no-cache
+	# docker-compose -f ./docker/docker-compose.yml build acme-controller dao-controller --no-cache
 	exit $?
 }
 
@@ -79,7 +80,7 @@ function display_help() {
 
 	Example: ./run_demo logs
 
-4) build will do a '--no-cache' docker compose build. Not normally needed as 'webstart'
+4) build will do a '--no-cache' docker compose build for the services dao-controller and acme-controller. Not normally needed as 'webstart'
    does a build, but the "no-cache" option can be useful in some cases with docker caching.
 
 	Example: ./run_demo build

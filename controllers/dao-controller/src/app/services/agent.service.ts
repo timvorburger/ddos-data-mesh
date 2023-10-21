@@ -1,32 +1,49 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import { AgentStatus } from '../enums/agent-status'
+import { AgentStatus } from '../enums/agent-status';
 
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { SchemaCreatedResponse, SchemaGETResponse } from '../models/schema';
+import { CredentialDefinitionsResponse } from '../models/credential';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AgentService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getStatus(): Observable<AgentStatus> {
-    return this.http.get<any>('/status')
-      .pipe(
-        switchMap(() => of(AgentStatus.Up)),
-        catchError(this.handleError<any>('getStatus', AgentStatus.Down))
-      );
+    return this.http.get<any>('/status').pipe(
+      switchMap(() => of(AgentStatus.Up)),
+      catchError(this.handleError<any>('getStatus', AgentStatus.Down))
+    );
   }
 
   getConnections(): Observable<any[]> {
-    return this.http.get<any[]>('/connections')
-      .pipe(
-        switchMap((response: any) => of(response.results)),
-        catchError(this.handleError<any[]>('getConnections', []))
-      );
+    return this.http.get<any[]>('/connections').pipe(
+      switchMap((response: any) => of(response.results)),
+      catchError(this.handleError<any[]>('getConnections', []))
+    );
+  }
+
+  getSchemas(): Observable<string[]> {
+    return this.http.get<SchemaCreatedResponse>('/schemas/created').pipe(
+      switchMap((response: SchemaCreatedResponse) => {
+        return of(response.schema_ids);
+      }),
+      catchError(this.handleError<any[]>('getSchemas', []))
+    );
+  }
+
+  getSchema(schemaId: string): Observable<string[]> {
+    return this.http.get<SchemaGETResponse>(`/schemas/${schemaId}`).pipe(
+      switchMap((response: SchemaGETResponse) => {
+        return of(response.schema.attrNames);
+      }),
+      catchError(this.handleError<any[]>('getCredentialDefinitions', []))
+    );
   }
 
   removeConnection(connectionId: string): Observable<any> {
@@ -34,19 +51,18 @@ export class AgentService {
       console.error('Must provide a connection ID');
       return throwError(() => new Error('Must provide a connection ID'));
     }
-    return this.http.post<any>(`/connections/${connectionId}/remove`, {})
-      .pipe(
-        switchMap(() => of(connectionId)),
-        catchError(this.handleError<any>('removeConnection', null))
-      );
+    return this.http.post<any>(`/connections/${connectionId}/remove`, {}).pipe(
+      switchMap(() => of(connectionId)),
+      catchError(this.handleError<any>('removeConnection', null))
+    );
   }
 
   createInvitation(alias: string): Observable<any> {
-
     const params: URLSearchParams = new URLSearchParams();
-    params.set("alias", alias)
+    params.set('alias', alias);
 
-    return this.http.post<any>('/connections/create-invitation?' + params, {})
+    return this.http
+      .post<any>('/connections/create-invitation?' + params, {})
       .pipe(
         switchMap((response: any) => of(response)),
         catchError(this.handleError<any>('createInvitation', null))
@@ -54,7 +70,9 @@ export class AgentService {
   }
 
   receiveInvitation(invitation: any): Observable<any> {
-    return this.http.post<any>('/connections/receive-invitation', invitation)
+    console.log('receive invitations');
+    return this.http
+      .post<any>('/connections/receive-invitation', invitation)
       .pipe(
         switchMap((response: any) => of(response)),
         catchError(this.handleError<any>('receiveInvitation', null))
@@ -62,19 +80,32 @@ export class AgentService {
   }
 
   getCredentials(): Observable<any[]> {
-    return this.http.get<any[]>('/credentials')
+    return this.http.get<any[]>('/credentials').pipe(
+      switchMap((response: any) => of(response.results)),
+      catchError(this.handleError<any[]>('getCredentials', []))
+    );
+  }
+
+  getCredentialDefinitions(schemaId: string): Observable<string[]> {
+    const params: URLSearchParams = new URLSearchParams();
+    params.set('schemaId', schemaId);
+    return this.http
+      .get<CredentialDefinitionsResponse>(
+        '/credential-definitions/created?' + params
+      )
       .pipe(
-        switchMap((response: any) => of(response.results)),
-        catchError(this.handleError<any[]>('getCredentials', []))
+        switchMap((response: CredentialDefinitionsResponse) =>
+          of(response.credential_definition_ids)
+        ),
+        catchError(this.handleError<any[]>('getCredentialDefinitions', []))
       );
   }
 
   getProofs(): Observable<any[]> {
-    return this.http.get<any[]>('/present-proof/records')
-      .pipe(
-        switchMap((response: any) => of(response.results)),
-        catchError(this.handleError<any[]>('getProofs', []))
-      );
+    return this.http.get<any[]>('/present-proof/records').pipe(
+      switchMap((response: any) => of(response.results)),
+      catchError(this.handleError<any[]>('getProofs', []))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

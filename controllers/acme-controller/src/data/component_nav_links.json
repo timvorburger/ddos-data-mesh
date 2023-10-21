@@ -1,0 +1,44 @@
+[
+    {
+        "parentRoute": "connections",
+        "label": "Create Connection",
+        "url": "new-connection",
+        "index": 0
+    },
+    {
+        "parentRoute": "connections",
+        "label": "Accept Connection",
+        "url": "receive-connection",
+        "index": 1
+    },
+    {
+        "parentRoute": "connections",
+        "label": "Active Connections",
+        "url": "my-connections",
+        "index": 1
+    },
+    {
+        "parentRoute": "credentials",
+        "label": "Issue Credentials",
+        "url": "issue-credentials",
+        "index": 0
+    },
+    {
+        "parentRoute": "credentials",
+        "label": "Review Credentials",
+        "url": "view-credentials",
+        "index": 1
+    },
+    {
+        "parentRoute": "proof-requests",
+        "label": "Request Proof",
+        "url": "request-proof",
+        "index": 0
+    },
+    {
+        "parentRoute": "proof-requests",
+        "label": "View Past Proofs",
+        "url": "view-proof-requests",
+        "index": 1
+    }
+]

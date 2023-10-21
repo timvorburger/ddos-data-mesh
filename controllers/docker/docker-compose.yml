@@ -1,11 +1,26 @@
 services:
     alice-agent:
-        command: ['alice --port 8030 --aip 10']
+        command: ['faber --port 8030']
         build:
             context: https://github.com/hyperledger/aries-cloudagent-python.git#main
             dockerfile: ./docker/Dockerfile.demo
         ports:
             - 8030-8037:8030-8037
+        networks:
+            - aca
+        environment:
+            - RUNMODE=${RUNMODE}
+            - DOCKERHOST=${DOCKERHOST}
+            - LEDGER_URL=${LEDGER_URL}
+            - GENESIS_URL=${GENESIS_URL}
+        tty: true
+    acme-agent:
+        command: ['faber --port 8040']
+        build:
+            context: https://github.com/hyperledger/aries-cloudagent-python.git#main
+            dockerfile: ./docker/Dockerfile.demo
+        ports:
+            - 8040-8047:8040-8047
         networks:
             - aca
         environment:
@@ -27,5 +42,17 @@ services:
             - aca
         depends_on:
             - alice-agent
+    acme-controller:
+        build:
+            context: ../acme-controller/
+            args:
+                - RUNMODE=${RUNMODE}
+                - ACME_AGENT_HOST=${ACME_AGENT_HOST}
+        ports:
+            - 9041:80
+        networks:
+            - aca
+        depends_on:
+            - acme-agent
 networks:
     aca:

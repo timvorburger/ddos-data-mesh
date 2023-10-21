@@ -11,16 +11,15 @@ import { AgentService } from 'src/app/services/agent.service';
   styleUrls: ['./connection-list.component.scss']
 })
 export class ConnectionListComponent {
-  connections: any[] = [];
+  connections: Connection[];
 
   constructor(private agentService: AgentService) { }
 
   ngOnInit() {
     this.agentService.getConnections().pipe(
-      map((connections: Connection[]) => {
-        return connections.filter((connection: Connection) => connection.state === ConnectionStatus.ACTIVE || connection.state === ConnectionStatus.REQUESTED)
+      map((connections: Connection[]) => {this.connections = connections.filter((connection: Connection) => connection.state === ConnectionStatus.ACTIVE || connection.state === ConnectionStatus.REQUESTED)
       })
-    )
+    ).subscribe()
   }
 
   onRemoveConnection(connection: any) {
@@ -28,7 +27,7 @@ export class ConnectionListComponent {
       .pipe(
         filter((connectionId: string) => !!connectionId),
         map((connectionId: string) =>
-          this.connections = this.connections.filter((conn: any) => conn.connection_id !== connectionId))
+          this.connections = this.connections.filter((conn: Connection) => conn.connection_id !== connectionId))
       )
       .subscribe();
   }
