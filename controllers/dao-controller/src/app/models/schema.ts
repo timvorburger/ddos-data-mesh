@@ -8,7 +8,7 @@ export type SchemaCreatedResponse = {
   schema_ids: string[];
 };
 
-type SchemaAttributes = {
+export type SchemaAttributes = {
     attrNames: string[];
     id: string;
     name: string;

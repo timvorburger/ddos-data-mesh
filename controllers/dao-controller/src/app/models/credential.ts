@@ -1,15 +1,14 @@
 export type CredentialDefinition = {
   schemaIssuerDid: string;
-
-}
+};
 
 export type CredentialDefinitionsResponse = {
   credential_definition_ids: string[];
-}
+};
 
 export type Credential = {
   comment: string;
-  credential_proposal: CredentialProposal;
+  credential_proposal: CredentialPreview;
   connection_id: string;
   schema_version: string;
   auto_remove: boolean;
@@ -19,6 +18,28 @@ export type Credential = {
   cred_def_id: string;
   issuer_did: string;
   schema_name: string;
+};
+
+export type IndyFilter = {
+  cred_def_id: string;
+  issuer_did: string;
+  schema_id: string;
+  schema_issuer_did: string;
+  schema_name: string;
+  schema_version: string;
+}
+
+export type FilterWrapper = {
+  "indy": IndyFilter
+}
+
+export type CredentialIssueBody = {
+  auto_remove: true;
+  comment: string;
+  connection_id: string;
+  credential_preview: CredentialPreview
+  filter: FilterWrapper;
+  trace: boolean;
 };
 
 export type CredentialResponse = {
@@ -54,10 +75,11 @@ export type Attribute = {
   name: string;
   mimeType?: string;
   value: string;
-  selected?: boolean
+  selected?: boolean;
+  error?: string;
 };
 
-type CredentialProposal = {
-  type: string;
+export type CredentialPreview = {
+  '@type': string;
   attributes: Attribute[];
 };

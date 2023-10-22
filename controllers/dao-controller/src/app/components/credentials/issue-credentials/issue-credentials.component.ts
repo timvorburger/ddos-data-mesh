@@ -2,8 +2,14 @@ import { Component } from '@angular/core';
 import { map } from 'rxjs';
 import { ConnectionStatus } from 'src/app/enums/connection-status';
 import { Connection } from 'src/app/models/connection';
-import { Attribute } from 'src/app/models/credential';
-import { Schema } from 'src/app/models/schema';
+import {
+  Attribute,
+  CredentialIssueBody,
+  CredentialPreview,
+  FilterWrapper,
+  IndyFilter,
+} from 'src/app/models/credential';
+import { Schema, SchemaAttributes } from 'src/app/models/schema';
 import { AgentService } from 'src/app/services/agent.service';
 import {
   createAttributesFromSchema,
@@ -20,10 +26,12 @@ export class IssueCredentialsComponent {
   testAttributes: Attribute[];
   connections: Connection[];
   schemas: Schema[];
-  selectedSchema: Schema;
+  selectedSchema: SchemaAttributes;
   selectedSchemaId: string;
   credDefId: string;
   submitDisabled: boolean = true;
+  validated: boolean = false;
+  selectedConnectionId: string;
 
   constructor(private agentService: AgentService) {}
 
@@ -51,6 +59,10 @@ export class IssueCredentialsComponent {
       .subscribe();
   }
 
+  handleAttributes($event: boolean) {
+    this.submitDisabled = !$event;
+  }
+
   handleChange($event: Event) {
     const htmlElement = $event.target as HTMLSelectElement;
     this.selectedSchemaId = htmlElement.value;
@@ -66,11 +78,76 @@ export class IssueCredentialsComponent {
     this.agentService
       .getSchema(this.selectedSchemaId)
       .pipe(
-        map((el: string[]) => {
-          this.schemaAttributes = createAttributesFromSchema(el);
-          console.log(this.selectedSchema)
+        map((el: SchemaAttributes) => {
+          this.selectedSchema = el;
+          this.schemaAttributes = createAttributesFromSchema(el.attrNames);
+          console.log(this.selectedSchema);
         })
       )
       .subscribe();
+  }
+  logg(value: any) {
+    console.log(value);
+  }
+
+  handleSubmit() {
+    console.log('Schema Attributes:', this.schemaAttributes);
+    console.log('ConnectionId:', this.selectedConnectionId);
+    console.log('Credential Definition ID:', this.credDefId);
+    console.log('Selected Schema:', this.selectedSchema);
+    console.log('SCHEMA ID ', this.selectedSchemaId);
+    const schemaId = this.selectedSchemaId;
+    const issuerDid = schemaId.split(':')[0];
+    const schemaVersion = this.selectedSchema.version;
+    const schemaName = this.selectedSchema.name;
+    const comment = `Issuing credentials for schema ${schemaName}`;
+    const trace = false;
+
+    const submitAttributes: Attribute[] = [];
+
+    this.validated = true;
+    this.schemaAttributes.forEach((att: Attribute) => {
+      if (!att.value) {
+        att.error =
+          'Cannot be empty';
+        this.validated = false;
+      } else {
+        submitAttributes.push({ name: att.name, value: att.value });
+      }
+    });
+
+    if (this.validated) {
+      const credentialPreview: CredentialPreview = {
+        '@type': 'issue-credential/2.0/credential-preview',
+        attributes: submitAttributes,
+      };
+
+      const filter: IndyFilter = {
+        cred_def_id: this.credDefId,
+        issuer_did: issuerDid,
+        schema_id: this.selectedSchemaId,
+        schema_issuer_did: issuerDid,
+        schema_name: schemaName,
+        schema_version: schemaVersion,
+      };
+
+      const filterWrapper: FilterWrapper = {
+        indy: filter,
+      };
+
+      const body: CredentialIssueBody = {
+        auto_remove: true,
+        comment: comment,
+        connection_id: this.selectedConnectionId,
+        credential_preview: credentialPreview,
+        filter: filterWrapper,
+        trace: trace,
+      };
+
+      this.agentService
+        .issueCredential(body)
+        .pipe(map((el) => console.log('IIIIIIIIIIIIIIII', el)))
+        .subscribe();
+    }
   }
 }

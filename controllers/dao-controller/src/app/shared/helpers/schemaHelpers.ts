@@ -3,7 +3,6 @@ import { Schema } from 'src/app/models/schema';
 
 export function getSchemaMetas(schmemaIds: string[]): Schema[] {
   let retArray: Schema[] = [];
-  console.log(schmemaIds);
   schmemaIds.forEach((el: string) => {
     const split = el.split(':');
     const schemaMeta: Schema = {

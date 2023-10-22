@@ -26,7 +26,6 @@ export class AcceptConnectionComponent {
         null,
         4
       );
-      console.log('IIIIIIIIIIIIIIIIIIIO', invitation);
       this.agentService
         .receiveInvitation(invitation)
         .pipe(map(() => this.router.navigateByUrl('/connections')))

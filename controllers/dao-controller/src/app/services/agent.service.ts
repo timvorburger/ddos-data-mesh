@@ -5,8 +5,8 @@ import { AgentStatus } from '../enums/agent-status';
 
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { SchemaCreatedResponse, SchemaGETResponse } from '../models/schema';
-import { CredentialDefinitionsResponse } from '../models/credential';
+import { SchemaAttributes, SchemaCreatedResponse, SchemaGETResponse } from '../models/schema';
+import { CredentialDefinitionsResponse, CredentialIssueBody } from '../models/credential';
 
 @Injectable({
   providedIn: 'root',
@@ -37,12 +37,12 @@ export class AgentService {
     );
   }
 
-  getSchema(schemaId: string): Observable<string[]> {
+  getSchema(schemaId: string): Observable<SchemaAttributes> {
     return this.http.get<SchemaGETResponse>(`/schemas/${schemaId}`).pipe(
       switchMap((response: SchemaGETResponse) => {
-        return of(response.schema.attrNames);
+        return of(response.schema);
       }),
-      catchError(this.handleError<any[]>('getCredentialDefinitions', []))
+      catchError(this.handleError<any>('getCredentialDefinitions', []))
     );
   }
 
@@ -70,7 +70,6 @@ export class AgentService {
   }
 
   receiveInvitation(invitation: any): Observable<any> {
-    console.log('receive invitations');
     return this.http
       .post<any>('/connections/receive-invitation', invitation)
       .pipe(
@@ -103,7 +102,14 @@ export class AgentService {
 
   getProofs(): Observable<any[]> {
     return this.http.get<any[]>('/present-proof/records').pipe(
-      switchMap((response: any) => of(response.results)),
+      switchMap((response: any) => of(response)),
+      catchError(this.handleError<any[]>('getProofs', []))
+    );
+  }
+
+  issueCredential(credentialIssueBody: CredentialIssueBody): Observable<any[]> {
+    return this.http.post<any[]>('/issue-credential-2.0/send', credentialIssueBody).pipe(
+      switchMap((response: any) => of(response)),
       catchError(this.handleError<any[]>('getProofs', []))
     );
   }

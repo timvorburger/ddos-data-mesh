@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Attribute } from 'src/app/models/credential';
 
 @Component({
@@ -8,38 +8,37 @@ import { Attribute } from 'src/app/models/credential';
 })
 export class CredentialFormComponent {
   @Input() attributes: Attribute[];
-  formAttributes: Attribute[] = [];
+  @Output() activeFormAttributes: EventEmitter<boolean> = new EventEmitter();
+  
   formModal: any;
   modalError: string;
 
   ngOnInit() {
-    this.attributes.forEach((att) => {
-      const formAttribute: Attribute = {
-        ...att,
-        selected: false,
-      };
-      this.formAttributes.push(formAttribute);
-    });
   }
 
-  addCredentialAttributeToForm() {}
-
   handleRemove(attName: string) {
-    const att = this.formAttributes.find(
+    const att = this.attributes.find(
       (el: Attribute) => el.name === attName
     );
     if (att != undefined) {
       (att.value = ''), (att.selected = false);
     }
+    this.checkFormSubmittable();
+  }
+
+  checkFormSubmittable() {
+    this.activeFormAttributes.emit(
+      this.attributes.some((el) => el.selected)
+    );
   }
 
   addAttribute(attName: string) {
-    const att = this.formAttributes.find(
+    const att = this.attributes.find(
       (el: Attribute) => el.name === attName
     );
     if (att != undefined) {
       att.selected = true;
     }
+    this.checkFormSubmittable();
   }
-
 }

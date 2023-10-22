@@ -33,7 +33,6 @@ export class NewConnectionComponent {
           this.invitation = invitation;
           this.invitationObject = this.invitation && JSON.stringify(this.invitation.invitation, null, 4) || '';
           this.invitationUrl = this.invitation && this.invitation.invitation_url || '';
-          console.log(this.invitationUrl)
         })
       )
       .subscribe();

@@ -54,7 +54,6 @@ export class AgentService {
   }
 
   receiveInvitation(invitation: any): Observable<any> {
-    console.log("receive invitation", invitation)
     return this.http.post<any>('/connections/receive-invitation', invitation)
       .pipe(
         switchMap((response: any) => of(response)),
