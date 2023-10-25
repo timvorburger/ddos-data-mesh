@@ -1,12 +1,12 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-import { map } from "rxjs";
-import { AgentService } from "src/app/services/agent.service";
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { map } from 'rxjs';
+import { AgentService } from 'src/app/services/agent.service';
 
 @Component({
-  selector: "app-accept-connection",
-  templateUrl: "./accept-connection.component.html",
-  styleUrls: ["./accept-connection.component.scss"],
+  selector: 'app-accept-connection',
+  templateUrl: './accept-connection.component.html',
+  styleUrls: ['./accept-connection.component.scss'],
 })
 export class AcceptConnectionComponent {
   invitationUrl: string;
@@ -17,7 +17,7 @@ export class AcceptConnectionComponent {
   onSubmit() {
     try {
       const url = new URL(this.invitationUrl);
-      const invitationParam = url.searchParams.get("c_i");
+      const invitationParam = url.searchParams.get('c_i');
       if (!invitationParam) {
         throw new Error();
       }
@@ -26,13 +26,13 @@ export class AcceptConnectionComponent {
         null,
         4
       );
-
       this.agentService
         .receiveInvitation(invitation)
-        .pipe(map(() => this.router.navigateByUrl("/connections")))
+        .pipe(map(() => this.router.navigateByUrl('/connections')))
         .subscribe();
     } catch (e: any) {
-      this.error = e.message;
+      if (e instanceof SyntaxError) this.error = 'URL is malformed';
+      else this.error = e.message;
     }
   }
 }

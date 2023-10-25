@@ -1,31 +1,77 @@
 version: '3'
 services:
-  aries-agent:
+  dao-aries-agent:
     image: bcgovimages/aries-cloudagent:py36-1.14-1_0.5.1
     command: >
-      start
-      -l Issuer
-      -it http 0.0.0.0 8880
-      -ot http
-      --admin 0.0.0.0 8038
-      --admin-insecure-mode
-      -e http://host.docker.internal:8880
-      --ledger-url http://test.bcovrin.vonx.io
-      --wallet-type indy
-      --wallet-name issuerwallet
-      --wallet-key issuerkey
-      --log-level 'info'
-      --auto-accept-invites
-      --auto-accept-requests
-      --auto-ping-connection
-      --seed issuer00000000000000000000000000
+      start  
+      --log-level 'info' 
+      --auto-respond-credential-offer
+      --auto-accept-invites 
+      --auto-accept-requests 
+      --auto-ping-connection 
+      --admin 0.0.0.0 8038 
+      --admin-insecure-mode 
+      --genesis-url http://host.docker.internal:9000/genesis 
+      -e http://host.docker.internal:8880 
+      --label dao-aries-agent 
+      --seed 8408abd1f8cdf1dd648503823c38b421 
+      --wallet-name dao_agent 
+      --wallet-type indy 
+      --wallet-key issuerkey -it http 0.0.0.0 8880 -ot http
     ports:
       - "8880:8880"
-      - "8031:8031"
+      - "8038:8038"
+    env_file:
+      - ./environments/dao-agent.env
     volumes:
       - $PWD:/home/indy/logs
     networks:
       - von_von
+      # - did-agents_aca
+
+  acme-aries-agent:
+    image: bcgovimages/aries-cloudagent:py36-1.14-1_0.5.1
+    command: >
+      start 
+      --log-level 'info' 
+      --auto-respond-credential-offer
+      --auto-accept-invites 
+      --auto-accept-requests 
+      --auto-ping-connection 
+      --auto-respond-credential-proposal
+      --auto-respond-credential-offer
+      --admin 0.0.0.0 8006 
+      --admin-insecure-mode 
+      --genesis-url http://host.docker.internal:9000/genesis 
+      -e http://host.docker.internal:8700 
+      --label acme-aries-agent 
+      --seed 34166cc2303480835585f913f8c43f0a 
+      --wallet-name acme_agent 
+      --wallet-type indy 
+      --wallet-key issuerkey -it http 0.0.0.0 8700 -ot http 
+    ports:
+      - "8700:8700"
+      - "8006:8006"
+    volumes:
+      - $PWD:/home/indy/logs
+    networks:
+      - von_von
+      # - did-agents_aca
+
+  dao-register-seed:
+    image: byrnedo/alpine-curl
+    networks:
+      - von_von
+    command: >-
+      http://host.docker.internal:9000/register -X POST -d '{"alias":"DAO AGENT","seed":"8408abd1f8cdf1dd648503823c38b421","role":"TRUST_ANCHOR"}'
+
+  acme-register-seed:
+    image: byrnedo/alpine-curl
+    networks:
+      - von_von
+    command: >-
+      http://host.docker.internal:9000/register -X POST -d '{"alias":"ACME AGENT","seed":"34166cc2303480835585f913f8c43f0a","role":"TRUST_ANCHOR"}'
 networks:
   von_von:
+    name: von_von
     external: true

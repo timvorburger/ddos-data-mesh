@@ -1,15 +1,16 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NewConnectionComponent } from './components/connections/new-connection/new-connection.component';
 import { ConnectionsComponent } from './components/connections/connections.component';
 import { AcceptConnectionComponent } from './components/connections/accept-connection/accept-connection.component';
-import { CredentialsComponent } from './components/credentials/credentials.component';
+import { CredentialsRouteComponent } from './components/credentials/credentials-route.component';
 import { RequestProofComponent } from './components/proof/request-proof/request-proof.component';
 import { ViewProofsComponent } from './components/proof/view-proofs/view-proofs.component';
-import { IssueCredentialsComponent } from './components/credentials/issue-credentials/issue-credentials.component';
-import { ReviewIssuedCredentialsComponent } from './components/credentials/reveiw-issued-credentials/reveiw-issued-credentials.component';
+import { IssueCredentialsExchangeComponent } from './components/credentials/issue-credentials/issue-credentials.component';
+import { ReviewIssuedCredentialsExchangeComponent } from './components/credentials/review-issued-credentials/review-issued-credentials.component';
 import { ProofComponent } from './components/proof/proof.component';
 import { ConnectionListComponent } from './components/connections/connection-list/connection-list.component';
+import { MyCredentialsExchangeComponent } from './components/credentials/my-credentials/my-credentials.component';
 export const routeConfig: Routes = [
   {
     path: 'connections',
@@ -23,11 +24,12 @@ export const routeConfig: Routes = [
   },
   {
     path: 'credentials',
-    component: CredentialsComponent,
+    component: CredentialsRouteComponent,
     children: [
       { path: '', redirectTo: 'issue-credentials', pathMatch: 'full' },
-      { path: 'issue-credentials', component: IssueCredentialsComponent},
-      { path: 'view-credentials', component: ReviewIssuedCredentialsComponent},
+      { path: 'issue-credentials', component: IssueCredentialsExchangeComponent},
+      { path: 'view-credentials', component: ReviewIssuedCredentialsExchangeComponent},
+      { path: 'my-credentials', component: MyCredentialsExchangeComponent},
     ],
   },
   {

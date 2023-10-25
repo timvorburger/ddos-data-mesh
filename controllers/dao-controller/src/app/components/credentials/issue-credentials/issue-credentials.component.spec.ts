@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IssueCredentialsComponent } from './issue-credentials.component';
+import { IssueCredentialsExchangeComponent } from './issue-credentials.component';
 
-describe('IssueCredentialsComponent', () => {
-  let component: IssueCredentialsComponent;
-  let fixture: ComponentFixture<IssueCredentialsComponent>;
+describe('IssueCredentialsExchangeComponent', () => {
+  let component: IssueCredentialsExchangeComponent;
+  let fixture: ComponentFixture<IssueCredentialsExchangeComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [IssueCredentialsComponent]
+      declarations: [IssueCredentialsExchangeComponent]
     });
-    fixture = TestBed.createComponent(IssueCredentialsComponent);
+    fixture = TestBed.createComponent(IssueCredentialsExchangeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

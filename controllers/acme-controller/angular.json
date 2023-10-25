@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "dao-controller": {
+    "acme-controller": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -21,7 +21,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dao-controller",
+            "outputPath": "dist/acme-controller",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "dao-controller:build:production"
+              "browserTarget": "acme-controller:build:production"
             },
             "development": {
-              "browserTarget": "dao-controller:build:development"
+              "browserTarget": "acme-controller:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "dao-controller:build"
+            "browserTarget": "acme-controller:build"
           }
         },
         "test": {

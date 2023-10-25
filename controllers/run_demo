@@ -58,8 +58,8 @@ function web_down() {
 }
 
 function build() {
-	docker-compose -f ./docker/docker-compose.yml build dao-controller --no-cache
-	# docker-compose -f ./docker/docker-compose.yml build acme-controller dao-controller --no-cache
+	#docker-compose -f ./docker/docker-compose.yml build dao-controller --no-cache
+	docker-compose -f ./docker/docker-compose.yml build acme-controller dao-controller --no-cache
 	exit $?
 }
 

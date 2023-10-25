@@ -13,5 +13,5 @@ RUN npm run build
 FROM nginx:alpine as runtime
 RUN rm -rf /usr/share/nginx/html/*
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /app/dist/dao-controller /usr/share/nginx/html/
+COPY --from=build /app/dist/ACME-controller /usr/share/nginx/html/
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

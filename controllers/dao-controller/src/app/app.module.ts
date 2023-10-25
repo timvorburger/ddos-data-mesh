@@ -13,18 +13,22 @@ import { AcceptConnectionComponent } from './components/connections/accept-conne
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnectionsComponent } from './components/connections/connections.component';
 import { RouterModule } from '@angular/router';
-import { CredentialsComponent } from './components/credentials/credentials.component';
-import { IssueCredentialsComponent } from './components/credentials/issue-credentials/issue-credentials.component';
+import { IssueCredentialsExchangeComponent } from './components/credentials/issue-credentials/issue-credentials.component';
 import { ComponentNavbarComponent } from './shared/component-navbar/component-navbar.component';
 import { ProofComponent } from './components/proof/proof.component';
 import { RequestProofComponent } from './components/proof/request-proof/request-proof.component';
 import { ViewProofsComponent } from './components/proof/view-proofs/view-proofs.component';
-import { ReviewIssuedCredentialsComponent } from './components/credentials/reveiw-issued-credentials/reveiw-issued-credentials.component';
+import { ReviewIssuedCredentialsExchangeComponent } from './components/credentials/review-issued-credentials/review-issued-credentials.component';
 import { ConnectionListComponent } from './components/connections/connection-list/connection-list.component';
 import { ConnectionCardComponent } from './components/connections/connection-card/connection-card.component';
 import { EmptyListComponent } from './shared/empty-list/empty-list.component';
 import { ToDatePipe } from './shared/pipes/to-date.pipe';
 import { CredentialFormComponent } from './components/credentials/credential-form/credential-form.component';
+import { CredentialsExchangeListComponent } from './components/credentials/credentials-exchange-list/credentials-exchange-list.component';
+import { CredentialsExchangeComponent } from './components/credentials/credential-exchange/credential-exchange.component';
+import { MyCredentialsExchangeComponent } from './components/credentials/my-credentials/my-credentials.component';
+import { CredentialsRouteComponent } from './components/credentials/credentials-route.component';
+import { CredentialComponent } from './components/credentials/credential/credential.component';
 
 @NgModule({
   declarations: [
@@ -35,18 +39,23 @@ import { CredentialFormComponent } from './components/credentials/credential-for
     NewConnectionComponent,
     AcceptConnectionComponent,
     ConnectionsComponent,
-    CredentialsComponent,
-    IssueCredentialsComponent,
+    CredentialsExchangeComponent,
+    IssueCredentialsExchangeComponent,
     ComponentNavbarComponent,
     ProofComponent,
     RequestProofComponent,
     ViewProofsComponent,
-    ReviewIssuedCredentialsComponent,
+    ReviewIssuedCredentialsExchangeComponent,
     ConnectionListComponent,
     ConnectionCardComponent,
     EmptyListComponent,
     ToDatePipe,
+    CredentialsRouteComponent,
     CredentialFormComponent,
+    CredentialsExchangeListComponent,
+    CredentialsExchangeComponent,
+    MyCredentialsExchangeComponent,
+    CredentialComponent,
   ],
   imports: [
     BrowserModule,

@@ -17,7 +17,7 @@ export class InterceptorService implements HttpInterceptor {
     // this.port = $ENV.RUNMODE === 'pwd' ? '' : ':8031';
 
     this.hostname = 'localhost';
-    this.port = ':8031';
+    this.port = ':8038';
     this.formattedAgentUrl = `http://${this.hostname}` + this.port;
     console.log('Agent is running on: ' + this.formattedAgentUrl);
   }

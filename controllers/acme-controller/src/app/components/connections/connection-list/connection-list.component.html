@@ -1,5 +1,5 @@
 <div *ngIf="this.connections" class="card-columns">
-    <app-connection-card *ngFor="let connection of this.connections" [connection]="connection"
+    <app-connection-card *ngFor="let connection of connections" [connection]="connection"
         (remove)="onRemoveConnection($event)"></app-connection-card>
 </div>
 

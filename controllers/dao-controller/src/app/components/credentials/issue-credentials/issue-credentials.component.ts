@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ConnectionStatus } from 'src/app/enums/connection-status';
 import { Connection } from 'src/app/models/connection';
 import {
   Attribute,
   CredentialIssueBody,
-  CredentialPreview,
+  CredentialProposal,
   FilterWrapper,
   IndyFilter,
 } from 'src/app/models/credential';
@@ -21,7 +22,7 @@ import {
   templateUrl: './issue-credentials.component.html',
   styleUrls: ['./issue-credentials.component.scss'],
 })
-export class IssueCredentialsComponent {
+export class IssueCredentialsExchangeComponent {
   schemaAttributes: Attribute[];
   testAttributes: Attribute[];
   connections: Connection[];
@@ -33,7 +34,7 @@ export class IssueCredentialsComponent {
   validated: boolean = false;
   selectedConnectionId: string;
 
-  constructor(private agentService: AgentService) {}
+  constructor(private agentService: AgentService, private router: Router) {}
 
   ngOnInit() {
     this.agentService
@@ -117,7 +118,7 @@ export class IssueCredentialsComponent {
     });
 
     if (this.validated) {
-      const credentialPreview: CredentialPreview = {
+      const credentialProposal: CredentialProposal = {
         '@type': 'issue-credential/2.0/credential-preview',
         attributes: submitAttributes,
       };
@@ -139,14 +140,14 @@ export class IssueCredentialsComponent {
         auto_remove: true,
         comment: comment,
         connection_id: this.selectedConnectionId,
-        credential_preview: credentialPreview,
+        credential_proposal: credentialProposal,
         filter: filterWrapper,
         trace: trace,
       };
 
       this.agentService
         .issueCredential(body)
-        .pipe(map((el) => console.log('IIIIIIIIIIIIIIII', el)))
+        .pipe(map(() => this.router.navigateByUrl("/credentials/view-credentials")))
         .subscribe();
     }
   }

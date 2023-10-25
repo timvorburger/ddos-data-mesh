@@ -27,7 +27,7 @@ export class ConnectionListComponent {
       .pipe(
         filter((connectionId: string) => !!connectionId),
         map((connectionId: string) =>
-          this.connections = this.connections.filter((conn: any) => conn.connection_id !== connectionId))
+          this.connections = this.connections.filter((conn: Connection) => conn.connection_id !== connectionId))
       )
       .subscribe();
   }

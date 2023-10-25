@@ -1,34 +1,34 @@
 services:
-    alice-agent:
-        command: ['faber --port 8030']
-        build:
-            context: https://github.com/hyperledger/aries-cloudagent-python.git#main
-            dockerfile: ./docker/Dockerfile.demo
-        ports:
-            - 8030-8037:8030-8037
-        networks:
-            - aca
-        environment:
-            - RUNMODE=${RUNMODE}
-            - DOCKERHOST=${DOCKERHOST}
-            - LEDGER_URL=${LEDGER_URL}
-            - GENESIS_URL=${GENESIS_URL}
-        tty: true
-    acme-agent:
-        command: ['faber --port 8040']
-        build:
-            context: https://github.com/hyperledger/aries-cloudagent-python.git#main
-            dockerfile: ./docker/Dockerfile.demo
-        ports:
-            - 8040-8047:8040-8047
-        networks:
-            - aca
-        environment:
-            - RUNMODE=${RUNMODE}
-            - DOCKERHOST=${DOCKERHOST}
-            - LEDGER_URL=${LEDGER_URL}
-            - GENESIS_URL=${GENESIS_URL}
-        tty: true
+    # alice-agent:
+    #     command: ['faber --port 8030']
+    #     build:
+    #         context: https://github.com/hyperledger/aries-cloudagent-python.git#main
+    #         dockerfile: ./docker/Dockerfile.demo
+    #     ports:
+    #         - 8030-8037:8030-8037
+    #     networks:
+    #         - aca
+    #     environment:
+    #         - RUNMODE=${RUNMODE}
+    #         - DOCKERHOST=${DOCKERHOST}
+    #         - LEDGER_URL=${LEDGER_URL}
+    #         - GENESIS_URL=${GENESIS_URL}
+    #     tty: true
+    # acme-agent:
+    #     command: ['faber --port 8040']
+    #     build:
+    #         context: https://github.com/hyperledger/aries-cloudagent-python.git#main
+    #         dockerfile: ./docker/Dockerfile.demo
+    #     ports:
+    #         - 8040-8047:8040-8047
+    #     networks:
+    #         - aca
+    #     environment:
+    #         - RUNMODE=${RUNMODE}
+    #         - DOCKERHOST=${DOCKERHOST}
+    #         - LEDGER_URL=${LEDGER_URL}
+    #         - GENESIS_URL=${GENESIS_URL}
+    #     tty: true
     # Controllers
     dao-controller:
         build:
@@ -39,9 +39,7 @@ services:
         ports:
             - 9031:80
         networks:
-            - aca
-        depends_on:
-            - alice-agent
+            - von_von
     acme-controller:
         build:
             context: ../acme-controller/
@@ -51,8 +49,17 @@ services:
         ports:
             - 9041:80
         networks:
-            - aca
-        depends_on:
-            - acme-agent
+            - von_von
+
+    # dao-register-seed:
+    #     image: byrnedo/alpine-curl
+    #     networks:
+    #     - von_von
+    #     command: >-
+    #         http://von_webserver_1:8000/register
+    #         -X POST
+    #         -d '{"alias":"Faber Agent","seed":"dao_seed_000000000000000000001","role":"TRUST_ANCHOR"}'
 networks:
-    aca:
+    von_von:
+        name: von_von
+        external: true

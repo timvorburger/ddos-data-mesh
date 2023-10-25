@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'dao-controller'`, () => {
+  it(`should have as title 'acme-controller'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('dao-controller');
+    expect(app.title).toEqual('acme-controller');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('dao-controller app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('acme-controller app is running!');
   });
 });

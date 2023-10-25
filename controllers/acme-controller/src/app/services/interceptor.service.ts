@@ -13,11 +13,11 @@ export class InterceptorService implements HttpInterceptor {
 
   constructor() {
     // TODO fix $ENV name not found
-    // this.hostname = $ENV.DAO_AGENT_HOST || 'localhost';
+    // this.hostname = $ENV.ACME_AGENT_HOST || 'localhost';
     // this.port = $ENV.RUNMODE === 'pwd' ? '' : ':8031';
 
     this.hostname = 'localhost';
-    this.port = ':8041';
+    this.port = ':8006';
     this.formattedAgentUrl = `http://${this.hostname}` + this.port;
     console.log('Agent is running on: ' + this.formattedAgentUrl);
   }
