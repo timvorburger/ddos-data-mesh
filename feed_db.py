@@ -17,11 +17,10 @@ def feed():
 
     print("Setting up db connection")
     mydb = mysql.connector.connect(
-        host="localhost",
+        host="host.docker.internal",
         user="user",
         password="password",
         database="domain_team_1_ddos_data",
-        
     )
 
     print("connected")
