@@ -21,6 +21,7 @@ def feed():
         user="user",
         password="password",
         database="domain_team_1_ddos_data",
+        port = 3307
     )
 
     print("connected")
