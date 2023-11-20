@@ -1,0 +1,40 @@
+x-trino-volumes:
+  &trino-volumes
+      - ./trino-config_coordinator/config:/etc/trino
+      - ./trino-config_coordinator/catalogs:/etc/trino/catalog
+
+services:
+  mysql:
+    image: mysql:8.1
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db_mysql/init_mysql:/docker-entrypoint-initdb.d
+      - ./db_mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'  
+  trino_coordinator:
+    image: trinodb/trino
+    container_name: trino-coordinator
+    ports: 
+      - "8080:8080"
+    volumes: *trino-volumes
+  trino_worker: 
+    image: trinodb/trino
+    container_name: trino-worker
+    ports: 
+      - "8081:8080"
+    volumes: 
+      - ./trino-config_worker/config:/etc/trino
+      - ./trino-config_worker/catalogs:/etc/trino/catalog
+  mysql-worker:
+    image: mysql:8.1
+    container_name: mysql-worker
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./db_mysql/init_mysql:/docker-entrypoint-initdb.d
+      - ./db_mysql/mysqld_worker_1.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password' 
