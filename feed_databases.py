@@ -5,9 +5,9 @@ import mysql.connector
 from tqdm import tqdm
 
 
-def feed():
+def feed(host, user, password, database, port, json_file_path):
 
-    path_to_json_files = "./fingerprints"
+    path_to_json_files = json_file_path
     json_file_names = [
         filename
         for filename in os.listdir(path_to_json_files)
@@ -15,16 +15,16 @@ def feed():
     ]
 
 
-    print("Setting up db connection")
+    print(f"Setting up db connection for database: {database}")
     mydb = mysql.connector.connect(
-        host="host.docker.internal",
-        user="user3",
-        password="password",
-        database="domain_team_3_ddos_data", 
-        port = 3308
+        host= host,
+        user= user,
+        password= password,
+        database= database, 
+        port = port
     )
 
-    print("connected")
+    print(f"connected")
 
     mycursor = mydb.cursor()
 
@@ -97,4 +97,34 @@ def feed():
 
 
 if __name__ == "__main__":
-    feed()
+
+    #database connection details
+    databases = [
+        {
+            "host": "host.docker.internal", 
+            "user": "user", 
+            "password": "password",
+            "database": "domain_team_1_ddos_data",
+            "port": 3306,
+            "json_file_path": "./fingerprints_domain_team_1"
+        },
+        {
+            "host": "host.docker.internal", 
+            "user": "user2", 
+            "password": "password",
+            "database": "domain_team_2_ddos_data",
+            "port": 3307,
+            "json_file_path": "./fingerprints_domain_team_2"
+        },
+        {
+            "host": "host.docker.internal", 
+            "user": "user3", 
+            "password": "password",
+            "database": "domain_team_3_ddos_data",
+            "port": 3308,
+            "json_file_path": "./fingerprints_domain_team_3"
+        }
+    ]
+    
+    for db_config in databases:
+        feed(**db_config)
