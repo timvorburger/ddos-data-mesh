@@ -6,7 +6,7 @@ CREATE TABLE Fingerprint (
   fingerprint_id VARCHAR(255) PRIMARY KEY NOT NULL, 
   target VARCHAR(255),
   location VARCHAR(155),
-  domain_team INT DEFAULT 1
+  domain_team INT DEFAULT 3
 );
 
 CREATE TABLE AttackVector (
