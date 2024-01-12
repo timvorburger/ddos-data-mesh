@@ -4,8 +4,15 @@ x-trino-volumes:
       - ./trino-config-coordinator/catalog:/etc/trino/catalog
 
 services:
+  trino_coordinator:
+      image: trinodb/trino
+      container_name: trino-coordinator
+      ports: 
+        - "8080:8080"
+      volumes: *trino-volumes
+
   mysql:
-    image: mysql:8.1
+    image: mysql:latest
     container_name: mysql
     ports:
       - "3306:3306"
@@ -14,12 +21,6 @@ services:
       - ./db_mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     environment:
       MYSQL_ROOT_PASSWORD: 'password'  
-  trino_coordinator:
-    image: trinodb/trino
-    container_name: trino-coordinator
-    ports: 
-      - "8080:8080"
-    volumes: *trino-volumes
   
   trino_worker-1: 
     image: trinodb/trino
@@ -30,7 +31,7 @@ services:
       - ./trino-config-worker-1:/etc/trino
       - ./trino-config-worker-1/catalog:/etc/trino/catalog
   mysql-worker-1:
-    image: mysql:8.1
+    image: mysql:latest
     container_name: mysql-worker-1
     ports:
       - "3307:3306"
@@ -48,8 +49,9 @@ services:
     volumes: 
       - ./trino-config-worker-2:/etc/trino
       - ./trino-config-worker-2/catalog:/etc/trino/catalog
+      
   mysql-worker-2:
-    image: mysql:8.1
+    image: mysql:latest
     container_name: mysql-worker-2
     ports:
       - "3308:3306"
