@@ -1,0 +1,64 @@
+{
+    "catalogs" : [
+        {
+            "user": "Alice",
+            "catalog": "domain_team_1",
+            "allow": "all"
+        },
+        {
+            "user": "Alice",
+            "catalog": "(domain_team_2|domain_team_3)",
+            "allow": "read-only"
+        },
+        {
+            "user": "Bob",
+            "catalog": "domain_team_1",
+            "allow": "all"
+        },
+        {
+            "user": "Chris",
+            "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
+            "allow": "read-only"
+        },
+        {
+            "user": "Diana",
+            "catalog": "domain_team_2",
+            "allow": "all"
+        },
+        {
+            "user": "Diana",
+            "catalog": "(domain_team_1|domain_team_3)",
+            "allow": "read-only"
+        },
+        {
+            "user": "Ellie",
+            "catalog": "domain_team_2",
+            "allow": "all"
+        },
+        {
+            "user": "Frank",
+            "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
+            "allow": "read-only"
+        },
+        {
+            "user": "Greg",
+            "catalog": "domain_team_3",
+            "allow": "all"
+        },
+        {
+            "user": "Greg",
+            "catalog": "(domain_team_1|domain_team_2)",
+            "allow": "read-only"
+        },
+        {
+            "user": "Hector",
+            "catalog": "domain_team_3",
+            "allow": "all"
+        },
+        {
+            "user": "Ivan",
+            "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
+            "allow": "read-only"
+        }
+    ]
+}
