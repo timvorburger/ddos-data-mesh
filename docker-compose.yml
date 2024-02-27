@@ -59,4 +59,11 @@ services:
       - ./db_mysql/init_mysql_worker-2:/docker-entrypoint-initdb.d
       - ./db_mysql/mysqld_worker-2.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     environment:
-      MYSQL_ROOT_PASSWORD: 'password' 
+      MYSQL_ROOT_PASSWORD: 'password'
+  
+  python-app:
+    image: python:3.9
+    container_name: python-app
+    volumes:
+      - ./python_app:/python_app
+    command: bash -c "pip install -r /python_app/requirements.txt && tail -f /dev/null"
