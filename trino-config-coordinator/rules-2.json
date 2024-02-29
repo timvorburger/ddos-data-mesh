@@ -1,67 +1,62 @@
 {
-    "catalogs" : [
+    "catalogs": [
         {
-            "user": "admin",
-            "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
-            "allow": "all"
-        },
-        {
-            "user": "Alice",
+            "user": "incident-manager-team-1",
             "catalog": "domain_team_1",
             "allow": "all"
         },
         {
-            "user": "Alice",
+            "user": "incident-manager-team-1",
             "catalog": "(domain_team_2|domain_team_3)",
             "allow": "read-only"
         },
         {
-            "user": "Bob",
+            "user": "developer-team-1",
             "catalog": "domain_team_1",
             "allow": "all"
         },
         {
-            "user": "Chris",
+            "user": "analyst-team-1",
             "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
             "allow": "read-only"
         },
         {
-            "user": "Diana",
+            "user": "incident-manager-team-2",
             "catalog": "domain_team_2",
             "allow": "all"
         },
         {
-            "user": "Diana",
+            "user": "incident-manager-team-2",
             "catalog": "(domain_team_1|domain_team_3)",
             "allow": "read-only"
         },
         {
-            "user": "Ellie",
+            "user": "developer-team-2",
             "catalog": "domain_team_2",
             "allow": "all"
         },
         {
-            "user": "Frank",
+            "user": "analyst-team-2",
             "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
             "allow": "read-only"
         },
         {
-            "user": "Greg",
+            "user": "incident-manager-team-3",
             "catalog": "domain_team_3",
             "allow": "all"
         },
         {
-            "user": "Greg",
+            "user": "incident-manager-team-3",
             "catalog": "(domain_team_1|domain_team_2)",
             "allow": "read-only"
         },
         {
-            "user": "Hector",
+            "user": "developer-team-3",
             "catalog": "domain_team_3",
             "allow": "all"
         },
         {
-            "user": "Ivan",
+            "user": "analyst-team-3",
             "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
             "allow": "read-only"
         }
