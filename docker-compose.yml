@@ -66,4 +66,5 @@ services:
     container_name: python-app
     volumes:
       - ./python_app:/python_app
+      - ./trino-config-coordinator/access-control-rules:/access-control-rules 
     command: bash -c "pip install -r /python_app/requirements.txt && tail -f /dev/null"

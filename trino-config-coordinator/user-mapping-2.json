@@ -1,8 +1,0 @@
-{
-    "rules": [
-        {
-            "pattern": "(.+)@(incident-manager-team-1|developer-team-1|analyst-team-1|incident-manager-team-2|developer-team-2|analyst-team-2|incident-manager-team-3|developer-team-3|analyst-team-3)\\.com",
-            "user": "$2"
-        }
-    ]
-}
