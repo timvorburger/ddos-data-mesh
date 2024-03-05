@@ -1,9 +1,13 @@
 {
-    "catalogs" : [
+    "catalogs": [
         {
             "user": "admin",
             "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
             "allow": "all"
+        },
+        {
+            "catalog": "system",
+            "allow": "none"
         },
         {
             "user": "Alice",
@@ -12,7 +16,12 @@
         },
         {
             "user": "Alice",
-            "catalog": "(domain_team_2|domain_team_3)",
+            "catalog": "domain_team_2",
+            "allow": "read-only"
+        },
+        {
+            "user": "Alice",
+            "catalog": "domain_team_3",
             "allow": "read-only"
         },
         {
@@ -21,48 +30,38 @@
             "allow": "all"
         },
         {
+            "user": "Bob",
+            "catalog": "domain_team_2",
+            "allow": "none"
+        },
+        {
+            "user": "Bob",
+            "catalog": "domain_team_3",
+            "allow": "none"
+        },
+        {
             "user": "Chris",
-            "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
+            "catalog": "domain_team_1",
+            "allow": "read-only"
+        },
+        {
+            "user": "Chris",
+            "catalog": "domain_team_2",
+            "allow": "read-only"
+        },
+        {
+            "user": "Chris",
+            "catalog": "domain_team_3",
             "allow": "read-only"
         },
         {
             "user": "Diana",
-            "catalog": "domain_team_2",
-            "allow": "all"
-        },
-        {
-            "user": "Diana",
-            "catalog": "(domain_team_1|domain_team_3)",
-            "allow": "read-only"
-        },
-        {
-            "user": "Ellie",
-            "catalog": "domain_team_2",
-            "allow": "all"
-        },
-        {
-            "user": "Frank",
-            "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
-            "allow": "read-only"
-        },
-        {
-            "user": "Greg",
             "catalog": "domain_team_3",
             "allow": "all"
         },
         {
-            "user": "Greg",
+            "user": "Diana",
             "catalog": "(domain_team_1|domain_team_2)",
-            "allow": "read-only"
-        },
-        {
-            "user": "Hector",
-            "catalog": "domain_team_3",
-            "allow": "all"
-        },
-        {
-            "user": "Ivan",
-            "catalog": "(domain_team_1|domain_team_2|domain_team_3)",
             "allow": "read-only"
         }
     ]

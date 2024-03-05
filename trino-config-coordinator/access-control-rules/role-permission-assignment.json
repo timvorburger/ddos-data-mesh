@@ -1,0 +1,52 @@
+{
+    "domain_teams" : [
+        "domain_team_1", "domain_team_2", "domain_team_3"
+    ],
+    "roles": [
+        {
+            "role": "incident-manager-team-1",
+            "catalogs": ["domain_team_1","(domain_team_2|domain_team_3)"],
+            "allow": ["all","read-only"]
+        },
+        {
+            "role": "developer-team-1",
+            "catalogs": ["domain_team_1"],
+            "allow": ["all"]
+        },
+        {
+            "role": "analyst-team-1",
+            "catalogs": ["(domain_team_1|domain_team_2|domain_team_3)"],
+            "allow": ["read-only"]
+        },
+        {
+            "role": "incident-manager-team-2",
+            "catalogs": ["domain_team_2","(domain_team_1|domain_team_3)"],
+            "allow": ["all","read-only"]
+        },
+        {
+            "role": "developer-team-2",
+            "catalogs": ["domain_team_2"],
+            "allow": ["all"]
+        },
+        {
+            "role": "analyst-team-2",
+            "catalogs": ["(domain_team_1|domain_team_2|domain_team_3)"],
+            "allow": ["read-only"]
+        },
+        {
+            "role": "incident-manager-team-3",
+            "catalogs": ["domain_team_3","(domain_team_1|domain_team_2)"],
+            "allow": ["all","read-only"]
+        },
+        {
+            "role": "developer-team-3",
+            "catalogs": ["domain_team_3"],
+            "allow": ["all"]
+        },
+        {
+            "role": "analyst-team-3",
+            "catalogs": ["(domain_team_1|domain_team_2|domain_team_3)"],
+            "allow": ["read-only"]
+        }
+    ]
+}
