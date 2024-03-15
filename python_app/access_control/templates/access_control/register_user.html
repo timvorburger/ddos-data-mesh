@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register User
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Register User</h1>
+
+    <form id="registerForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Register">
+    </form>
+</div>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+
+    fetch('/api/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user: username,
+            password: password,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response data
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+</script>
+{% endblock %}

@@ -9,7 +9,6 @@ def read_json_file(file_path):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
-            print(f"Data from {file_path}:\n{json.dumps(data, indent=4)}\n")
             return data
     except Exception as e:
         print(f"Error reading JSON file: {file_path}\n{e}\n")
@@ -69,11 +68,11 @@ def revoke_user(input_data, rules_data, role_permissions):
     user = input_data['user']
 
     # Remove all rules for the user
-    rules_data['catalogs'] = [rule for rule in rules_data['catalogs'] if rule['user'] != user]
+    rules_data['catalogs'] = [rule for rule in rules_data['catalogs'] if 'user' in rule and rule['user'] != user]
     print(f"Revoked all rules for user: {user}\n")
 
     # Write the updated rules back to the rules.json file
-    write_json_file('/access-control-rules/rules.json', rules_data)
+    write_json_file(RULES_JSON_PATH, rules_data)
 
 # get the input and rules files
 parser = argparse.ArgumentParser(description='Manage access control')

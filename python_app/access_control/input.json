@@ -1,0 +1,7 @@
+{
+    "action": "invoke_user",
+    "user": "Ivan",
+    "role": [
+        "analyst-team-3"
+    ]
+}

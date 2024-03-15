@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your App Name{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Additional head content like scripts and stylesheets -->
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <!-- Common navigation or header content -->
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <!-- Common footer content -->
+    </footer>
+
+    <!-- Additional scripts at the bottom for faster page loading -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>
