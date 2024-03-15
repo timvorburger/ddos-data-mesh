@@ -1,0 +1,9 @@
+{
+    "roles": [
+        "incident-manager",
+        "developer",
+        "analyst",
+        "rule",
+        "incident-specialist"
+    ]
+}

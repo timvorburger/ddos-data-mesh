@@ -1,0 +1,78 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4;
+}
+
+.dashboard-container {
+  padding: 40px;
+}
+
+.dashboard-item {
+  background-color: #fff;
+  color: #333;
+  border-radius: 4px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header {
+  background-color: #fff;
+  color: #333;
+  padding: 20px 40px;
+}
+
+.stat {
+  background-color: #fff;
+  color: #00BCD4;
+  margin: 20px;
+  padding: 30px;
+  border-radius: 4px;
+}
+
+.button {
+  background-color: #00BCD4;
+  color: #fff;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0097A7;
+}
+
+.logout-button {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+}
+
+@media (max-width: 600px) {
+  .dashboard-item {
+    padding: 20px;
+  }
+}
+
+/* New CSS rules */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#registerForm {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}

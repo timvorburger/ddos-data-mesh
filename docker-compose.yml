@@ -62,9 +62,11 @@ services:
       MYSQL_ROOT_PASSWORD: 'password'
   
   python-app:
-    image: python:3.9
+    build: ./python_app
     container_name: python-app
     volumes:
       - ./python_app:/python_app
       - ./trino-config-coordinator/access-control-rules:/access-control-rules 
-    command: bash -c "pip install -r /python_app/requirements.txt && tail -f /dev/null"
+      - ./trino-config-coordinator/user-database:/user-database
+    ports:
+      - "5000:5000"
