@@ -4,6 +4,8 @@
         "developer",
         "analyst",
         "rule",
-        "incident-specialist"
+        "incident-specialist",
+        "newRole",
+        "example"
     ]
 }

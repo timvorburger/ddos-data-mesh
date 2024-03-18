@@ -21,7 +21,7 @@ def create_user(data):
     
     # Create an entry in the ACL.json file
     acl_entry = {
-        'userID': user_id,
+        'userId': user_id,
         'username': data['user'],
         'team': '',
         'role': ''
@@ -66,10 +66,10 @@ def get_users():
     users = [line.split(':')[0] for line in lines]
     return {'users': users}
 
-def get_user(username):
+def get_user(userId):
     try:
         acl_data = utilities.read_json_file(ACL_JSON_PATH)
-        user_entry = next((entry for entry in acl_data if entry['username'] == username), None)
+        user_entry = next((entry for entry in acl_data if entry['userId'] == userId), None)
         if user_entry:
             return jsonify(user_entry), 200
         else:
