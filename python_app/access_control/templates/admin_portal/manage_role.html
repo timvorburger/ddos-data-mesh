@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+Manage Role
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Manage Role</h1>
+
+    <form id="manageRoleForm" data-catalogs="{{ catalogs|join(',') }}">
+        <label for="role">Role:</label><br>
+        <select id="role" name="role" required>
+            <option value="">Select a role</option>
+            {% for role in roles %}
+            <option value="{{ role }}">{{ role }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="team">Team:</label><br>
+        <select id="team" name="team" required>
+            <option value="">Select a team</option>
+            {% for team in teams %}
+            <option value="{{ team }}">{{ team }}</option>
+            {% endfor %}
+        </select><br>
+
+        <h2>Catalogs</h2>
+        {% for catalog in catalogs %}
+        <label for="{{ catalog }}">{{ catalog }}:</label><br>
+        <select id="{{ catalog }}" name="{{ catalog }}">
+            <option value="all">All</option>
+            <option value="read-only">Read-Only</option>
+            <option value="none">None</option>
+        </select><br>
+        {% endfor %}
+
+        <input type="submit" value="Update Role">
+    </form>
+</div>
+
+<script>
+document.getElementById('manageRoleForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var role = document.getElementById('role').value;
+    var team = document.getElementById('team').value;
+    var catalogs = this.getAttribute('data-catalogs').split(',');
+
+    var allow = catalogs.map(function(catalog) {
+        return document.getElementById(catalog).value;
+    });
+
+    if (!role || !team || !catalogs.length || !allow.length) {
+        console.error('All fields are required');
+        return;
+    }
+
+    fetch('/api/roles/update', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            role: role,
+            team: team,
+            catalogs: catalogs,
+            allow: allow,
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+</script>
+{% endblock %}

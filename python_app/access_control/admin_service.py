@@ -6,6 +6,7 @@ import threading
 
 ROLES_JSON_PATH = 'access_control/roles.json'
 DOMAINS_JSON_PATH = 'access_control/domains.json'
+CATALOGS_JSON_PATH = 'access_control/catalogs.json'
 ROLES_PERMISSION_ASSIGNMENT = '/access-control-rules/role-permission-assignment.json'
 ACL_JSON_PATH = "access_control/ACL.json"
 
@@ -154,3 +155,6 @@ def delete_domain(input_data):
 
 def get_domains(): 
     return utilities.read_json_file(DOMAINS_JSON_PATH)  
+
+def get_catalogs(): 
+    return utilities.read_json_file(CATALOGS_JSON_PATH)  
