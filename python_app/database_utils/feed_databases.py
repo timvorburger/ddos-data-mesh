@@ -106,7 +106,7 @@ if __name__ == "__main__":
             "password": "password",
             "database": "domain_team_1_ddos_data",
             "port": 3306,
-            "json_file_path": "/python_app/fingerprints_domain_team_1"
+            "json_file_path": "/python_app/database_utils/fingerprints_domain_team_1"
         },
         {
             "host": "mysql-worker-1",
@@ -114,7 +114,7 @@ if __name__ == "__main__":
             "password": "password",
             "database": "domain_team_2_ddos_data",
             "port": 3306,
-            "json_file_path": "/python_app/fingerprints_domain_team_2"
+            "json_file_path": "/python_app/database_utils/fingerprints_domain_team_2"
         },
         {
             "host": "mysql-worker-2",
@@ -122,7 +122,7 @@ if __name__ == "__main__":
             "password": "password",
             "database": "domain_team_3_ddos_data",
             "port": 3306,
-            "json_file_path": "/python_app/fingerprints_domain_team_3"
+            "json_file_path": "/python_app/database_utils/fingerprints_domain_team_3"
         }
     ]
     
