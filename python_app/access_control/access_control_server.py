@@ -19,7 +19,16 @@ def register():
             return jsonify({"error": "Missing JSON in request body."}), 400
     else:
         return render_template('access_control/register_user.html')
-        
+
+@app.route('/api/users', methods=['DELETE'])
+def delete_user():
+    if request.mehtod == 'DELETE':
+        data = request.get_json()
+        try:
+            return user_service.delete_user(data)
+        except CalledProcessError as e:
+            return jsonify(error=str(e)), 500
+
 @app.route('/api/users', methods=['GET','POST'])
 def invoke_user():
     if request.method == 'POST': 
@@ -54,11 +63,9 @@ def revoke_user(userId):
     if request.method == 'DELETE':
         data = request.get_json()
         try:
-            rules_service.revoke_user(data)
-            user_service.delete_user(data)
+            return rules_service.revoke_user(data)
         except CalledProcessError as e: 
             return jsonify(error=str(e)), 500
-        return jsonify({"message": "User revoked and deleted successfully"}), 200
     else:
         user = user_service.get_user(userId)
         users = user_service.get_users()
