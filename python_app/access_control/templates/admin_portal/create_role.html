@@ -66,14 +66,26 @@ Create Role
                 allow: allow,
             }),
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
             .then(data => {
                 console.log(data);
+                var popup = $("<div></div>")
+                .text(data.status === 200 ? data.body.message : data.body.error) 
+                .css({
+                    'position': 'fixed',
+                    'bottom': '20px',
+                    'right': '20px',
+                    'background-color': data.status === 200 ? '#3498DB' : '#e74c3c',
+                    'color': '#fff',
+                    'padding': '15px 30px',
+                    'border-radius': '4px',
+                    'display': 'none'
+                })
+                .appendTo('body');
+        
+                popup.fadeIn(200).delay(5000).fadeOut(200, function(){
+                $(this).remove();
+                });
             })
             .catch((error) => {
                 console.error('Error:', error);

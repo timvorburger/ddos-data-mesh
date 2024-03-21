@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Access Control Portal</h1>
+
+    <h2>Manage Users</h2>
+    <form action="/api/register" style="margin-bottom: 10px;"><input type="submit" value="Register User"></form>
+    <form action="/api/users/<userId>/delete" style="margin-bottom: 10px;"><input type="submit" value="Delete User"></form>
+    <form action="/api/users" style="margin-bottom: 10px;"><input type="submit" value="Invoke User"></form>
+    <form action="/api/users/<userId>/update" style="margin-bottom: 10px;"><input type="submit" value="Manage User"></form>
+    <form action="/api/users/<userId>/revoke" style="margin-bottom: 10px;"><input type="submit" value="Revoke User"></form>
+
+    <h2>Manage Roles</h2>
+    <form action="/api/roles/create" style="margin-bottom: 10px;"><input type="submit" value="Create Role"></form>
+    <form action="/api/roles/update" style="margin-bottom: 10px;"><input type="submit" value="Manage Role"></form>
+    <form action="/api/roles/delete" style="margin-bottom: 10px;"><input type="submit" value="Delete Role"></form>
+</div>
+{% endblock %}
