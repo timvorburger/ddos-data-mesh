@@ -8,10 +8,13 @@ app = Flask(__name__)
 
 from flask import render_template
 
+@app.route('/', methods=['GET'])
+def home(): 
+    return render_template('home.html')
+
 @app.route('/api/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Expect a JSON body with the POST request
         if request.is_json:
             data = request.get_json()
             return user_service.create_user(data)
@@ -20,14 +23,6 @@ def register():
     else:
         return render_template('access_control/register_user.html')
 
-@app.route('/api/users', methods=['DELETE'])
-def delete_user():
-    if request.mehtod == 'DELETE':
-        data = request.get_json()
-        try:
-            return user_service.delete_user(data)
-        except CalledProcessError as e:
-            return jsonify(error=str(e)), 500
 
 @app.route('/api/users', methods=['GET','POST'])
 def invoke_user():
@@ -58,7 +53,7 @@ def manage_user(userId):
         domains = admin_service.get_domains()
         return render_template('access_control/manage_user.html', user=user, users=users['users'], roles=roles['roles'], teams=domains['domain_teams'])
 
-@app.route('/api/users/<userId>/delete', methods=['DELETE', 'GET'])
+@app.route('/api/users/<userId>/revoke', methods=['DELETE', 'GET'])
 def revoke_user(userId): 
     if request.method == 'DELETE':
         data = request.get_json()
@@ -72,7 +67,24 @@ def revoke_user(userId):
         roles = admin_service.get_roles()
         domains = admin_service.get_domains()
         return render_template('access_control/revoke_user.html', user=user, users=users['users'], roles=roles['roles'], teams=domains['domain_teams'])
-    
+
+@app.route('/api/users/<userId>/delete', methods=['GET','DELETE'])
+def delete_user(userId):
+    if request.method == 'DELETE':
+        data = request.get_json()
+        try:
+            rules_service.revoke_user(data)
+            user_service.delete_user(data)
+            return jsonify({"message": "User revoked and deleted successfully"}), 200
+        except CalledProcessError as e:
+            return jsonify(error=str(e)), 500
+    else:
+        user = user_service.get_user(userId)
+        users = user_service.get_users()
+        roles = admin_service.get_roles()
+        domains = admin_service.get_domains()
+        return render_template('access_control/delete_user.html', user=user, users=users['users'], roles=roles['roles'], teams=domains['domain_teams'])
+
 @app.route('/api/roles/create', methods=['GET', 'POST'])
 def create_role():
     if request.method == 'POST':

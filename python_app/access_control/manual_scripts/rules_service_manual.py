@@ -26,16 +26,12 @@ def invoke_user(input_data, rules_data, role_permissions):
     user = input_data['user']
     roles = input_data['role']
 
-    # For each role in the input data
     for role in roles:
-        # Find the corresponding role in the role permissions
         role_permission = next((item for item in role_permissions['roles'] if item["role"] == role), None)
 
-        # If the role is found
         if role_permission:
-            # For each catalog and corresponding permission in the role's catalogs and permissions
+            # Create rule for each catalog and corresponding permission
             for catalog, permission in zip(role_permission['catalogs'], role_permission['allow']):
-                # Create a new rule
                 new_rule = {
                     'user': user,
                     'catalog': catalog,
@@ -44,38 +40,32 @@ def invoke_user(input_data, rules_data, role_permissions):
 
                 print(f"New rule created:\n{json.dumps(new_rule, indent=4)}\n")
 
-                # Append the new rule to the catalogs list
                 rules_data['catalogs'].append(new_rule)
 
     print(f"Updated rules data:\n{json.dumps(rules_data, indent=4)}\n")
 
-    # Write the updated rules back to the rules.json file
     write_json_file(RULES_JSON_PATH, rules_data)
 
 def manage_user(input_data, rules_data, role_permissions):
-    # Extract user from input data
     user = input_data['user']
 
-    # Remove all existing rules for the user
+    # Remove all rules for the user
     rules_data['catalogs'] = [rule for rule in rules_data['catalogs'] if rule['user'] != user]
     print(f"Removed existing rules for user: {user}\n")
 
-    # Invoke the invoke_user() function to create new rules for the user
+    # Invoke new rules for the user
     invoke_user(input_data, rules_data, role_permissions)
 
 def revoke_user(input_data, rules_data, role_permissions):
-    # Extract user from input data
     user = input_data['user']
 
     # Remove all rules for the user
     rules_data['catalogs'] = [rule for rule in rules_data['catalogs'] if rule['user'] != user]
     print(f"Revoked all rules for user: {user}\n")
 
-    # Write the updated rules back to the rules.json file
     write_json_file('/access-control-rules/rules.json', rules_data)
 
 
-# Read the input and rules files
 input_data = read_json_file(INPUT_JSON_PATH)
 rules_data = read_json_file(RULES_JSON_PATH)
 role_permissions = read_json_file(PERMISSION_ASSIGNMENT_JSON_PATH)

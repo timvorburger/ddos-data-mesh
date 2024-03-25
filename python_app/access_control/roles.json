@@ -3,9 +3,7 @@
         "incident-manager",
         "developer",
         "analyst",
-        "rule",
         "incident-specialist",
-        "newRole",
-        "example"
+        "newRole"
     ]
 }

@@ -11,7 +11,6 @@ ROLES_PERMISSION_ASSIGNMENT = '/access-control-rules/role-permission-assignment.
 ACL_JSON_PATH = "access_control/ACL.json"
 
 def create_role(input_data): 
-    # Check if the required fields are present in the input data
     if not all(key in input_data for key in ('role', 'team', 'catalogs', 'allow')):
         return jsonify({'error': 'Invalid data. Must contain user, role, and team.'}), 400
 
@@ -23,7 +22,6 @@ def create_role(input_data):
     role_permissions = utilities.read_json_file(ROLES_PERMISSION_ASSIGNMENT)
     roles = utilities.read_json_file(ROLES_JSON_PATH)
 
-    # Check if there are existing assignments made to that specific role/team combination
     for role_permission in role_permissions['roles']:
         if role_permission['role'] == input_data['role'] and role_permission['team'] == input_data['team']:
             return {'error': 'Role and team combination already exists.'}, 400
@@ -46,10 +44,10 @@ def create_role(input_data):
     
     return {'message': 'Role permission created successfully.'}, 200
 
-lock = threading.Lock()
-  
+# Lock to prevent race conditions in manage role
+lock = threading.Lock() 
+
 def manage_role(input_data):    
-    # Check if the required fields are present in the input data
     if not all(key in input_data for key in ('role', 'team', 'catalogs', 'allow')):
         return jsonify({'error': 'Invalid data. Must contain role, team, catalogs, and allow.'}), 400
 
@@ -69,7 +67,7 @@ def manage_role(input_data):
             users = [user for user in acl if user['role'] == role and user['team'] == team]
             print(f'users from acl: {users}')
 
-            # Update the role's catalogs and permissions with the new data
+            # Update the role's catalogs and permissions
             role_permission['catalogs'] = catalogs
             role_permission['allow'] = allow
             
@@ -91,7 +89,6 @@ def manage_role(input_data):
     return {'error': 'Role and team combination not found.'}, 404
 
 def delete_role(input_data): 
-    # Check if the required fields are present in the input data
     if not all(key in input_data for key in ('role', 'team')):
         return jsonify({'error': 'Invalid data. Must contain role and team.'}), 400
 
@@ -125,12 +122,10 @@ def create_domain(input_data):
     domain = input_data['domain']
     domains = utilities.read_json_file(DOMAINS_JSON_PATH)
     
-    # Check if the domain already exists
     for existing_domain in domains['domains']:
         if existing_domain['domain'] == domain:
             return {'error': 'Domain already exists.'}, 400
     
-    # Create a new domain
     new_domain = {
         'domain': domain
     }
@@ -139,15 +134,12 @@ def create_domain(input_data):
     
     return {'message': 'Domain created successfully.'}, 200
 
- 
 def delete_domain(input_data): 
     domain = input_data['domain']
     domains = utilities.read_json_file(DOMAINS_JSON_PATH)
     
-    # Find the domain with the specified name
     for i, existing_domain in enumerate(domains['domains']):
         if existing_domain['domain'] == domain:
-            # Remove the domain from the list of domains
             del domains['domains'][i]
             utilities.write_json_file(DOMAINS_JSON_PATH, domains)
             return {'message': 'Domain deleted successfully.'}, 200
