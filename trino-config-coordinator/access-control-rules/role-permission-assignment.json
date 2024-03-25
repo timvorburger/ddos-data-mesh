@@ -65,9 +65,9 @@
                 "domain_team_3"
             ],
             "allow": [
-                "none",
+                "read-only",
                 "all",
-                "none"
+                "read-only"
             ]
         },
         {

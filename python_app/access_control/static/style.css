@@ -8,12 +8,11 @@ html {
   align-items: center;
 }
 
-/* Style for input fields */
 input[type="text"], input[type="password"], select {
   width: 95%;
   padding: 10px;
-  margin-bottom: 20px; /* Space between input fields */
-  border: 1px solid #CCCCCC; /* Light grey border */
+  margin-bottom: 20px; 
+  border: 1px solid #CCCCCC; 
   border-radius: 4px;
 }
 
@@ -21,15 +20,15 @@ select {
   width: 100%;
 }
 
-/* Style for the submit button */
+
 input[type="submit"] {
-  background-color: #3498DB; /* Blue background for the button */
-  color: #FFFFFF; /* White text for the button */
+  background-color: #3498DB; 
+  color: #FFFFFF; 
   padding: 10px;
   border: none;
   width: 100%;
   border-radius: 5px;
-  cursor: pointer; /* Changes cursor to pointer on hover */
+  cursor: pointer; 
 }
 
 .dashboard-container {
@@ -90,7 +89,6 @@ input[type="submit"] {
   }
 }
 
-/* New CSS rules */
 .form-container {
   padding: 20px;
   background-color: #f7f7f7;
