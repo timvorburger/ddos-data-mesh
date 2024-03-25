@@ -2,8 +2,6 @@
     "roles": [
         "incident-manager",
         "developer",
-        "analyst",
-        "incident-specialist",
-        "newRole"
+        "analyst"
     ]
 }
