@@ -74,7 +74,7 @@ This project builds upon existing work about data discovery in a DDoS data mesh 
 ## Demo
 In this demo we create a new role _incident-specialist_ and invoke a user owning this role. 
 
-![Access Control System Demo](assets/demo.mp4)
+https://github.com/timvorburger/ddos-data-mesh/assets/75628730/f4963fc0-fc41-48c6-9c03-2a30f488cbdc
 
 
 
