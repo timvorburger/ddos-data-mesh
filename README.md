@@ -71,6 +71,10 @@ This project builds upon existing work about data discovery in a DDoS data mesh 
    
 6. Now you are connected with the Trino CLI and can query the cluster, using appropriate SQL statements. Make sure to follow Trino's structure of always mentioning the `catalog.schema.table` when querying. For an overview of past queries, you can connect to the Trino Web Interface under the following address: *https://localhost:8443/ui/login.html*. Ignore the warning and log in with an authorized user. In the Cluster Overview in the section "QUERY DETAILS" you can investigate past queries.
 
+## Demo
+In this demo we create a new role _incident-specialist_ and invoke a user owning this role. 
+
+![Access Control System Demo](assets/demo.mp4)
 
 
 
